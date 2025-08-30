@@ -91,9 +91,6 @@ pub struct LumixMarkCli {
    #[arg(short, long, default_value_t = 0.14)]
    /// 水印相当于短边的比率（0.1 - 0.15）
    pub ratio: f32,
-   /// 并行处理图片数量
-   #[arg(short, long, default_value_t = 5)]
-   pub par_count: usize,
 }
 
 impl LumixMarkCli {
@@ -106,7 +103,6 @@ impl LumixMarkCli {
       self
          .images
          .par_iter()
-         .take(self.par_count)
          .for_each(|path| {
             let mut lumix_mark = LumixMark::from_image(path, self.ratio)
                .expect(&format!("当前图片操作失败：{:?}", path));
