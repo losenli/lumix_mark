@@ -14,6 +14,7 @@ Options:
   -h, --help                       Print help
   -V, --version                    Print version
 ```
+### 通过[release](https://github.com/losenli/lumix_mark/releases/tag/release)下载
 
 ### 使用示例
 ```shell
