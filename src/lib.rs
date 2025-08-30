@@ -80,13 +80,18 @@ pub fn parse_path(file_path: &PathBuf, target_path: &PathBuf) -> Result<PathBuf>
 #[derive(Parser)]
 #[command(version)]
 pub struct LumixMarkCli {
+   /// 多张图片地址或者文件夹，使用空格分隔
    pub images: Vec<PathBuf>,
    #[arg(short, long, default_value = ".")]
+   /// 输出到指定文件夹，不存在则会创建
    pub target_path: PathBuf,
    #[arg(short, long, default_value_t = 75)]
+   /// 图片质量 （75 - 100）
    pub quality: u8,
    #[arg(short, long, default_value_t = 0.14)]
+   /// 水印相当于短边的比率（0.1 - 0.15）
    pub ratio: f32,
+   /// 并行处理图片数量
    #[arg(short, long, default_value_t = 5)]
    pub par_count: usize,
 }
