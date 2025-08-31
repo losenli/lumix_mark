@@ -11,7 +11,6 @@ Options:
   -t, --target-path <TARGET_PATH>  输出到指定文件夹，不存在则会创建 [default: .]
   -q, --quality <QUALITY>          图片质量 （75 - 100） [default: 75]
   -r, --ratio <RATIO>              水印相当于短边的比率（0.1 - 0.15） [default: 0.14]
-  -p, --par-count <PAR_COUNT>      并行处理图片数量 [default: 5]
   -h, --help                       Print help
   -V, --version                    Print version
 ```
