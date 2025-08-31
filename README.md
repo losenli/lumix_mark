@@ -1,5 +1,5 @@
 # lumix_mark
-一键给指定照片或者文件下所有照片添加exif水印，logo目前为L卡口，作者使用的松下相机；
+一键给指定照片或者文件下所有照片添加exif水印，logo目前为L卡口，作者使用的LUMIX相机；
 
 ```
 Usage: lumix_mark.exe [OPTIONS] [IMAGES]...
