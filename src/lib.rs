@@ -24,6 +24,13 @@ static LOGO_BYTES: &[u8] = include_bytes!("../images/logo.jpg");
 static FONT_BYTES: &[u8] = include_bytes!("../fonts/MiSansLatin-Demibold.ttf");
 
 fn is_image_file(path: &Path) -> bool {
+   if let Some(file_name) = path.file_name() {
+      let start_mark = file_name.to_string_lossy().starts_with("mark_");
+      if start_mark {
+         println!("======>mark_开头的文件忽略：{:?}", path);
+         return false;
+      }
+   }
    if let Some(extension) = path.extension() {
       let ext = extension.to_string_lossy().to_lowercase();
       matches!(ext.as_str(), "jpg" | "jpeg")
@@ -100,12 +107,20 @@ impl LumixMarkCli {
       config
    }
    pub fn par_draw_logo_exif_task(&self) {
-      self
+      let _: Vec<_> = self
          .images
          .par_iter()
-         .for_each(|path| {
-            let mut lumix_mark = LumixMark::from_image(path, self.ratio)
-               .expect(&format!("当前图片操作失败：{:?}", path));
+         .filter_map(|path| match LumixMark::from_image(path, self.ratio) {
+            Ok(lumix_mark) => {
+               println!("======>开始处理图片：{:?}", path);
+               Some((lumix_mark, path))
+            }
+            Err(err) => {
+               eprintln!("===error===>解析图片失败：{}, 图片地址：{:?}", err, path);
+               None
+            }
+         })
+         .map(|(mut lumix_mark, path)| {
             lumix_mark
                .draw_logo_exif(
                   0.35,
@@ -135,7 +150,8 @@ impl LumixMarkCli {
                   "保存文件失败：target_path:{:?};path:{:?}",
                   &self.target_path, path
                ));
-         });
+         })
+         .collect();
    }
 }
 
